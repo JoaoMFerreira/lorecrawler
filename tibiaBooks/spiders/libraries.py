@@ -5,7 +5,7 @@ from scrapy.loader import ItemLoader
 id = 0
 
 class BooksSpider(scrapy.Spider):
-    name = "booksT"
+    name = "librarys"
     start_urls = [
         'http://tibia.wikia.com/wiki/Library'
     ]
@@ -25,7 +25,7 @@ class BooksSpider(scrapy.Spider):
         location = response.css('aside div.pi-data-value a::text')[0].extract()
         author = response.css('aside div.pi-data-value::text')[1].extract()
         shortDescription = response.css('aside div.pi-data-value::text')[0].extract()
-        text = response.css('blockquote.book::text').extract_first()
+        text = response.css('blockquote.book::text').extract()
 
         l = ItemLoader(item=TibiabooksItem(), response=response)
         l.add_value('id', id)

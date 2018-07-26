@@ -6,21 +6,28 @@
 # https://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-from scrapy.loader.processors import TakeFirst
+from scrapy.loader.processors import TakeFirst, MapCompose, Join
+from w3lib.html import remove_tags
+
 
 
 def lower_case(value):
-    if( isinstance(value[0], str) ):
-        return value[0].lower()
+    newValue = []
+    if( isinstance(value, list) ):
+        for word in value:
+            newValue.append(word.lower())
+        return newValue
     else:
-        return value[0]
-        pass    
+        return value            
+                
+
+        
 
 class TibiabooksItem(scrapy.Item):
     # define the fields for your item here like:
-    id = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
+    id = scrapy.Field()
     name = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
     location = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
     author = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
     shortDescription = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
-    text = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
+    text = scrapy.Field(input_processor=lower_case, output_processor=Join())
