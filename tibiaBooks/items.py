@@ -6,14 +6,17 @@
 # https://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+from scrapy.loader.processors import TakeFirst
 
+
+def lower_case(value):
+    value.lower()
 
 class TibiabooksItem(scrapy.Item):
     # define the fields for your item here like:
     id = scrapy.Field()
-    name = scrapy.Field()
-    location = scrapy.Field()
-    author = scrapy.Field()
-    shortDescription() scrapy.Field()
-    text = scrapy.Field()
-    pass
+    name = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
+    location = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
+    author = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
+    shortDescription = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
+    text = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
