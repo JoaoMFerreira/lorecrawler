@@ -7,8 +7,6 @@
 
 import scrapy
 from scrapy.loader.processors import TakeFirst, MapCompose, Join
-from w3lib.html import remove_tags
-
 
 
 def lower_case(value):
@@ -20,12 +18,9 @@ def lower_case(value):
     else:
         return value            
                 
-
-        
-
 class TibiabooksItem(scrapy.Item):
     # define the fields for your item here like:
-    id = scrapy.Field()
+    id = scrapy.Field(output_processor=TakeFirst())
     name = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
     location = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())
     author = scrapy.Field(input_processor=lower_case, output_processor=TakeFirst())

@@ -21,9 +21,13 @@ class BooksSpider(scrapy.Spider):
     def parse_book(self, response):      
         global id
         id += 1
-        
         location = response.css('aside div.pi-data-value a::text')[0].extract()
-        author = response.css('aside div.pi-data-value::text')[1].extract()
+        
+        try:
+            author = response.css('aside div.pi-data-value::text')[1].extract()
+        except IndexError:
+            author = response.css('aside div.pi-data-value a::text')[1].extract()
+
         shortDescription = response.css('aside div.pi-data-value::text')[0].extract()
         text = response.css('blockquote.book::text').extract()
 
@@ -34,5 +38,5 @@ class BooksSpider(scrapy.Spider):
         l.add_value('author', author)
         l.add_value('shortDescription', shortDescription)
         l.add_value('text', text)
-        return l.load_item()   
+        return l.load_item()
 
