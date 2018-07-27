@@ -97,4 +97,4 @@ def query(index, query, operator='AND', fields=None):
     print('\n')
 
 index = index_docs(DATA, 'name', 'location', 'text')
-query(index, 'nearby Lake')
+query(index, 'basilisk')
